@@ -18,11 +18,15 @@ var (
 	totalBytesReceived  uint64
 )
 
-func Serve() {
+func NewMux() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/bodhi/stream", handleAudioStream)
 	mux.HandleFunc("/bodhi/metrics", handleMetrics)
+	return mux
+}
 
+func Serve() {
+	mux := NewMux()
 	log.Printf("Bodhi Mock STT Engine listening on HTTP %s", ListenAddr)
 	go func() {
 		if err := http.ListenAndServe(ListenAddr, mux); err != nil {

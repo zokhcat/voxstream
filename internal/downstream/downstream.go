@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"time"
 
-	"voxstream/internal/config"
 	"voxstream/internal/frame"
 )
 
@@ -19,8 +18,8 @@ func NewClient() *http.Client {
 	}
 }
 
-func Dispatch(client *http.Client, f *frame.AudioFrame) bool {
-	req, err := http.NewRequest("POST", config.MockBodhiURL, bytes.NewReader(f.Data))
+func Dispatch(client *http.Client, url string, f *frame.AudioFrame) bool {
+	req, err := http.NewRequest("POST", url, bytes.NewReader(f.Data))
 	if err != nil {
 		return false
 	}

@@ -62,13 +62,13 @@ func HandleCallStream(ctx context.Context, conn net.Conn, pool *sync.Pool, clien
 			ArrivedAt: startTime,
 		}
 
-		dispatched := downstream.Dispatch(client, &f)
+		dispatched := downstream.Dispatch(client, config.MockBodhiURL, &f)
 
 		overhead := time.Since(startTime)
 		totalFrames++
 		totalOverheadUs += overhead.Microseconds()
 
-		log.Printf(" [%s] Frame #%04d | Proxy Overhead: %4µs | Bodhi Dispatched: %t",
+		log.Printf(" [%s] Frame #%04d | Proxy Overhead: %d us | Bodhi Dispatched: %t",
 			callID, totalFrames, overhead.Microseconds(), dispatched)
 
 		pool.Put(bufPtr)
